@@ -37,7 +37,7 @@ do
   Log "Started workload ${file} ..."
 
   workload=${file}
-  json_wild_output=`echo ${workload} | sed 's/.yaml$/\-Kafka-/g'`
+  json_wild_output=`basename ${workload} | sed 's/.yaml$/\-Kafka/g'`
 
   mv ${json_wild_output}* ${curr_dir}/bak
   ${curr_dir}/bin/benchmark --drivers ${driver} ${workload}
