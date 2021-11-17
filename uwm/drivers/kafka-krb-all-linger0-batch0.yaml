@@ -22,23 +22,30 @@ name: Kafka
 driverClass: io.openmessaging.benchmark.driver.kafka.KafkaBenchmarkDriver
 
 # Kafka client-specific configuration
-replicationFactor: 1
+replicationFactor: 3
 
 topicConfig: |
-  min.insync.replicas=1
+  min.insync.replicas=2
 
 commonConfig: |
-  bootstrap.servers=localhost:9092
+  bootstrap.servers=s01vdskafka005.shoremortgage.com:9094,s01vdskafka006.shoremortgage.com:9094,s01vdskafka007.shoremortgage.com:9094,s01vdskafka008.shoremortgage.com:9094
+  schema.registry.url=http://s01vdskafreg001.shoremortgage.com:8081
+  security.protocol=SASL_SSL
+  sasl.mechanisms=GSSAPI
+  sasl.kerberos.service.name=cp-kafka
+  ssl.truststore.location=/home/c.vnaryanan/github.com/venkyraghav/openmessaging-benchmark/uwm/driver-kafka/config/kafka_broker.truststore.jks
+  ssl.truststore.password=lot91JLM45
+  sasl.jaas.config=com.sun.security.auth.module.Krb5LoginModule required \
+    useKeyTab=true \
+    storeKey=true \
+    keyTab="/home/c.vnaryanan/github.com/venkyraghav/openmessaging-benchmark/uwm/driver-kafka/config/kafka.keytab" \
+    principal="cp-kafka/s01vdskafka007.shoremortgage.com@SHOREMORTGAGE.COM";
 
 producerConfig: |
   acks=all
-  linger.ms=200
-  batch.size=524288
-  interceptor.classes=io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor
-  confluent.monitoring.interceptor.bootstrap.servers=localhost:9092
+  linger.ms=0
+  batch.size=0
 
 consumerConfig: |
   auto.offset.reset=earliest
   enable.auto.commit=false
-  interceptor.classes=io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor
-  confluent.monitoring.interceptor.bootstrap.servers=localhost:9092
