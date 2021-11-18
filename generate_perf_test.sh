@@ -37,12 +37,16 @@ do
   Log "Started workload ${file} ..."
 
   workload=${file}
-  json_wild_output=`basename ${workload} | sed 's/.yaml$/\-Kafka/g'`
+  scenario=`basename ${workload} | sed 's/.yaml$//g'`
 
-  mv ${json_wild_output}* ${curr_dir}/bak
+  json_wild_output="${scenario}-Kafka"
+
+  mv ${scenario}* ${curr_dir}/bak 2> /dev/null
+
   ${curr_dir}/bin/benchmark --drivers ${driver} ${workload}
-  touch ${json_wild_output}-2021-11-15-12-13.json
   json_output=`ls -1 ${json_wild_output}*.json`
+  Log "JSON wildcard ${json_wild_output}"
+  Log "JSON output file ${json_output}"
 
   Log "Deleting topics from workload ${workload} ..."
   for topic in `kafka-topics --bootstrap-server ${bootstrap_server} --list|grep "^test-topic-"`

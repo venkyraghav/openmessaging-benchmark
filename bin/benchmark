@@ -26,12 +26,12 @@ fi
 
 JVM_OPTS="-javaagent:/Users/vnarayanan/_official/github.com/venkyraghav/jmx-monitoring-stacks/jmxexporter-prometheus-grafana/assets/prometheus/jmx-exporter/jmx_prometheus_javaagent-0.12.0.jar=8094:/Users/vnarayanan/_official/github.com/venkyraghav/jmx-monitoring-stacks/jmxexporter-prometheus-grafana/assets/prometheus/jmx-exporter/kafka-app.yml"
 
-CP_CLASSPATH=`cat /Users/vnarayanan/_official/cp/cp_classpath.txt`
-CLASSPATH=${CP_CLASSPATH}:${CLASSPATH}
+# CP_CLASSPATH=`cat /Users/vnarayanan/_official/cp/cp_classpath.txt`
+# CLASSPATH=${CP_CLASSPATH}:${CLASSPATH}
 
 JVM_MEM="-Xms4G -Xmx4G -XX:+UseG1GC"
 JVM_GC_LOG=" -XX:+PrintGCDetails -XX:+PrintGCApplicationStoppedTime  -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=64m  -Xloggc:/dev/shm/benchmark-client-gc_%p.log"
 
-echo ${CLASSPATH}
+# echo ${CLASSPATH}
 
 java -server -cp $CLASSPATH $JVM_MEM ${JVM_OPTS} io.openmessaging.benchmark.Benchmark $*
